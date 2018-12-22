@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
+
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult';
 import Map from './Map';
@@ -10,12 +12,28 @@ class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: '',
+      place: this.getPlaceParam(),
       location: {
         lat: 35,
         lng: 135,
       },
     };
+  }
+
+  componentDidMount() {
+    const place = this.getPlaceParam();
+    if (place && place.length > 0) {
+      this.startSearch();
+    }
+  }
+
+  getPlaceParam() {
+    const params = queryString.parse(this.props.location.search);
+    const place = params.place;
+    if (place && place.length > 0) {
+      return place;
+    }
+    return null;
   }
 
   setErrorMessage(message) {
@@ -28,9 +46,14 @@ class SearchPage extends Component {
     });
   }
 
-  handlePlaceSubmit(place) {
-    this.props.history.push(`/?query=${place}`);
-    geocode(place)
+  handlePlaceSubmit(e) {
+    e.preventDefault();
+    this.props.history.push(`/?place=${this.state.place}`);
+    this.startSearch();
+  }
+
+  startSearch() {
+    geocode(this.state.place)
       .then(({ status, address, location }) => {
         switch (status) {
           case 'OK': {
@@ -55,11 +78,21 @@ class SearchPage extends Component {
       });
   }
 
+  handlePlaceChange(place) {
+    this.setState({
+      place,
+    });
+  }
+
   render() {
     return (
       <div>
         <h1>緯度経度検索</h1>
-        <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
+        <SearchForm
+          place={this.state.place}
+          onSubmit={e => this.handlePlaceSubmit(e)}
+          onPlaceChange={place => this.handlePlaceChange(place)}
+        />
         <GeocodeResult
           address={this.state.address}
           location={this.state.location}
@@ -72,6 +105,7 @@ class SearchPage extends Component {
 
 SearchPage.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string }).isRequired,
 };
 
 export default SearchPage;
