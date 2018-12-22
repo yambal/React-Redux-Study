@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult';
+import Map from './Map';
 
 const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
 const GOOGLE_MAP_APIKEY = 'AIzaSyCINYzcjOFN4ChmBlhWaWOsKwkA4UQeHn4';
@@ -11,16 +12,16 @@ class App extends Component {
     super(props);
     this.state = {
       address: '',
-      lat: 0,
-      lng: 0,
+      lat: 35,
+      lng: 135,
     };
   }
 
   setErrorMessage(message) {
     this.setState({
       address: message,
-      lat: 0,
-      lng: 0,
+      lat: 35,
+      lng: 135,
     });
   }
 
@@ -70,6 +71,7 @@ class App extends Component {
           lat={this.state.lat}
           lng={this.state.lng}
         />
+        <Map lat={this.state.lat} lng={this.state.lng} />
       </div>
     );
   }
