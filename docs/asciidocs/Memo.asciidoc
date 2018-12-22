@@ -860,5 +860,31 @@ const AboutPage = () => (
 export default AboutPage;
 ----
 
+=== History をPushする
+Route に追加されている props を利用する +
+props.history がほぼ History API のラッパーになっている
+
+* props.history.go
+* props.history.goBack
+* props.history.goForward
+* *props.history.push*
+
+↓/src/components/SearchPage.jsx
+----
+...
+import PropTypes from 'prop-types';
+...
+handlePlaceSubmit(place) {
+  this.props.history.push(`/?query=${place}`);
+...
+}
+...
+SearchPage.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
+----
+
+=== getパラメータをアプリ内で利用する
+
 ==
 https://ics.media/entry/16028

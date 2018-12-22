@@ -474,6 +474,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_react_router_のインストール">5.1. React Router のインストール</a></li>
 <li><a href="#_メニューとページを作成する">5.2. メニューとページを作成する</a></li>
+<li><a href="#_history_をpushする">5.3. History をPushする</a></li>
+<li><a href="#_getパラメータをアプリ内で利用する">5.4. getパラメータをアプリ内で利用する</a></li>
 </ul>
 </li>
 </ul>
@@ -1558,7 +1560,7 @@ export const staticMap = (location, width, height, zoom) =&gt; `https://maps.goo
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<img src="../images/fig02.PNG" alt="Fig1">
+<img src="../images/fig02.PNG" alt="Fig2">
 </div>
 </div>
 </div>
@@ -1566,6 +1568,11 @@ export const staticMap = (location, width, height, zoom) =&gt; `https://maps.goo
 <div class="sect1">
 <h2 id="_react_router">5. React Router</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../images/fig03.PNG" alt="Fig3">
+</div>
+</div>
 <div class="sect2">
 <h3 id="_react_router_のインストール">5.1. React Router のインストール</h3>
 <div class="listingblock">
@@ -1630,6 +1637,50 @@ const AboutPage = () =&gt; (
 export default AboutPage;</pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_history_をpushする">5.3. History をPushする</h3>
+<div class="paragraph">
+<p>Route に追加されている props を利用する<br>
+props.history がほぼ History API のラッパーになっている</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>props.history.go</p>
+</li>
+<li>
+<p>props.history.goBack</p>
+</li>
+<li>
+<p>props.history.goForward</p>
+</li>
+<li>
+<p><strong>props.history.push</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>↓/src/components/SearchPage.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>...
+import PropTypes from 'prop-types';
+...
+handlePlaceSubmit(place) {
+  this.props.history.push(`/?query=${place}`);
+...
+}
+...
+SearchPage.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getパラメータをアプリ内で利用する">5.4. getパラメータをアプリ内で利用する</h3>
 <div class="paragraph">
 <p>==
 <a href="https://ics.media/entry/16028" class="bare">https://ics.media/entry/16028</a></p>
@@ -1641,7 +1692,7 @@ export default AboutPage;</pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-23 01:11:45 +0900
+Last updated 2018-12-23 01:43:38 +0900
 </div>
 </div>
 </body>
