@@ -466,3 +466,255 @@ lat::
 緯度
 lng::
 経度
+
+==== JSXでも補完を効かせるAtomプラグイン
+emet
+
+keymap.cson (File > keymap...) に追記
+----
+'atom-text-editor[data-grammar="source js jsx"]':
+  'tab': 'emmet:expand-abbreviation-with-tab'
+----
+
+==== ファイルの命名規則
+キャメルケース（ *アッパーキャメルケース* ）としているサンプルが多いようなのでふぉれに合わせる +
+app.jsx → App.jsx（index.jsxからの参照も修正する）
+
+=== SearchForm コンポーネント
+↓/component/SearchForm.jsx
+----
+import React, { Component, PropTypes } from 'react';
+
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      place: '大阪',
+    };
+  }
+
+  handlePlaceChange(place) {
+    this.setState({
+      place,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSubmit(this.state.place);
+  }
+
+  render() {
+    return (
+      <form onSubmit={e => this.handleSubmit(e)}>
+        <input
+          type="text"
+          value={this.state.place}
+          onChange={e => this.handlePlaceChange(e.target.value)}
+        />
+        <input type="submit" value="検索" />
+      </form>
+    );
+  }
+}
+
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default SearchForm;
+----
+↓/component/App.jsx
+----
+import React, { Component } from 'react';
+import SearchForm from './SearchForm';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Jhon',
+    };
+  }
+
+  handlePlaceSubmit(place) {
+    console.log(place);
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>緯度経度検索</h1>
+        <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
+      </div>
+    );
+  }
+}
+
+export default App;
+----
+
+=== GeocodeResultコンポーネント
+----
+import React, { PropTypes } from 'react';
+
+const GeocodeResult = ({ address, lat, lng }) => (
+  <ul className="geocode-result">
+    <li>住所：{ address }</li>
+    <li>緯度：{ lat }</li>
+    <li>経度：{ lng }</li>
+  </ul>
+);
+
+GeocodeResult.propTypes = {
+  address: PropTypes.string,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+};
+
+GeocodeResult.defaultProps = {
+  address: '',
+  lat: 0,
+  lng: 0,
+};
+
+export default GeocodeResult;
+----
+↓/component/App.jsx
+----
+import React, { Component } from 'react';
+import SearchForm from './SearchForm';
+import GeocodeResult from './GeocodeResult';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: '',
+      lat: 0,
+      lng: 0,
+    };
+  }
+
+  handlePlaceSubmit(place) {
+    console.log(place);
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>緯度経度検索</h1>
+        <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
+        <GeocodeResult
+          address={this.state.address}
+          lat={this.state.lat}
+          lng={this.state.lng}
+        />
+      </div>
+    );
+  }
+}
+
+export default App;
+----
+
+=== Google Geocoding API に問い合わせ、結果を表示する
+==== axios ライブラリを追加する
+ブラウザや node.js で動く Promise ベースのHTTPクライアントである｡REST-API を実行したいときなど､これを使うと実装が簡単にできる｡
+----
+yarn add axios@0.16.2
+----
+
+==== Google Geocoding API
+https://developers.google.com/maps/documentation/geocoding/intro[Google Geocoding API]
+
+エンドポイント::
+https://maps.googleapis.com/maps/api/geocode/[outputFormat]
+outputFormat::
+json or xml
+パタメタ:address::
+住所
+パラメタ:key::
+APIキーが必須になった
+
+↓/component/App.jsx
+----
+import axios from 'axios';
+import React, { Component } from 'react';
+import SearchForm from './SearchForm';
+import GeocodeResult from './GeocodeResult';
+
+const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
+const GOOGLE_MAP_APIKEY = 'AIzaSyCINYzcjOFN4ChmBlhWaWOsKwkA4UQeHn4';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: '',
+      lat: 0,
+      lng: 0,
+    };
+  }
+
+  setErrorMessage(message) {
+    this.setState({
+      address: message,
+      lat: 0,
+      lng: 0,
+    });
+  }
+
+  handlePlaceSubmit(place) {
+    axios
+      .get(GEOCODE_ENDPOINT, {
+        params: {
+          key: GOOGLE_MAP_APIKEY,
+          address: place,
+        },
+      })
+      .then((results) => {
+        const data = results.data;
+        const result = data.results[0];
+        switch (data.status) {
+          case 'OK': {
+            const location = result.geometry.location;
+            this.setState({
+              address: result.formatted_address,
+              lat: location.lat,
+              lng: location.lng,
+            });
+            break;
+          }
+          case 'ZERO_RESULTS': {
+            this.setErrorMessage('結果が見つかりませんでした');
+            break;
+          }
+          default: {
+            this.setErrorMessage('結果が見つかりませんでした');
+          }
+        }
+      })
+      .catch((error) => {
+        // console.log(error);
+        this.setErrorMessage('通信に失敗しました');
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>緯度経度検索</h1>
+        <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
+        <GeocodeResult
+          address={this.state.address}
+          lat={this.state.lat}
+          lng={this.state.lng}
+        />
+      </div>
+    );
+  }
+}
+
+export default App;
+----

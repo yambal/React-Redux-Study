@@ -463,6 +463,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_reactを使った実践的なwebアプリケーションの作成">3. Reactを使った実践的なWEBアプリケーションの作成</a>
 <ul class="sectlevel2">
 <li><a href="#_構成">3.1. 構成</a></li>
+<li><a href="#_searchform_コンポーネント">3.2. SearchForm コンポーネント</a></li>
+<li><a href="#_geocoderesultコンポーネント">3.3. GeocodeResultコンポーネント</a></li>
+<li><a href="#_google_geocoding_api_に問い合わせ結果を表示する">3.4. Google Geocoding API に問い合わせ、結果を表示する</a></li>
 </ul>
 </li>
 </ul>
@@ -1132,6 +1135,307 @@ export default App;</pre>
 </dd>
 </dl>
 </div>
+<div class="sect3">
+<h4 id="_jsxでも補完を効かせるatomプラグイン">3.1.1. JSXでも補完を効かせるAtomプラグイン</h4>
+<div class="paragraph">
+<p>emet</p>
+</div>
+<div class="paragraph">
+<p>keymap.cson (File &gt; keymap&#8230;&#8203;) に追記</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>'atom-text-editor[data-grammar="source js jsx"]':
+  'tab': 'emmet:expand-abbreviation-with-tab'</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ファイルの命名規則">3.1.2. ファイルの命名規則</h4>
+<div class="paragraph">
+<p>キャメルケース（ <strong>アッパーキャメルケース</strong> ）としているサンプルが多いようなのでふぉれに合わせる<br>
+app.jsx → App.jsx（index.jsxからの参照も修正する）</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_searchform_コンポーネント">3.2. SearchForm コンポーネント</h3>
+<div class="paragraph">
+<p>↓/component/SearchForm.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component, PropTypes } from 'react';
+
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      place: '大阪',
+    };
+  }
+
+  handlePlaceChange(place) {
+    this.setState({
+      place,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSubmit(this.state.place);
+  }
+
+  render() {
+    return (
+      &lt;form onSubmit={e =&gt; this.handleSubmit(e)}&gt;
+        &lt;input
+          type="text"
+          value={this.state.place}
+          onChange={e =&gt; this.handlePlaceChange(e.target.value)}
+        /&gt;
+        &lt;input type="submit" value="検索" /&gt;
+      &lt;/form&gt;
+    );
+  }
+}
+
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default SearchForm;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓/component/App.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component } from 'react';
+import SearchForm from './SearchForm';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Jhon',
+    };
+  }
+
+  handlePlaceSubmit(place) {
+    console.log(place);
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;緯度経度検索&lt;/h1&gt;
+        &lt;SearchForm onSubmit={place =&gt; this.handlePlaceSubmit(place)} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_geocoderesultコンポーネント">3.3. GeocodeResultコンポーネント</h3>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { PropTypes } from 'react';
+
+const GeocodeResult = ({ address, lat, lng }) =&gt; (
+  &lt;ul className="geocode-result"&gt;
+    &lt;li&gt;住所：{ address }&lt;/li&gt;
+    &lt;li&gt;緯度：{ lat }&lt;/li&gt;
+    &lt;li&gt;経度：{ lng }&lt;/li&gt;
+  &lt;/ul&gt;
+);
+
+GeocodeResult.propTypes = {
+  address: PropTypes.string,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+};
+
+GeocodeResult.defaultProps = {
+  address: '',
+  lat: 0,
+  lng: 0,
+};
+
+export default GeocodeResult;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓/component/App.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component } from 'react';
+import SearchForm from './SearchForm';
+import GeocodeResult from './GeocodeResult';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: '',
+      lat: 0,
+      lng: 0,
+    };
+  }
+
+  handlePlaceSubmit(place) {
+    console.log(place);
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;緯度経度検索&lt;/h1&gt;
+        &lt;SearchForm onSubmit={place =&gt; this.handlePlaceSubmit(place)} /&gt;
+        &lt;GeocodeResult
+          address={this.state.address}
+          lat={this.state.lat}
+          lng={this.state.lng}
+        /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_google_geocoding_api_に問い合わせ結果を表示する">3.4. Google Geocoding API に問い合わせ、結果を表示する</h3>
+<div class="sect3">
+<h4 id="_axios_ライブラリを追加する">3.4.1. axios ライブラリを追加する</h4>
+<div class="paragraph">
+<p>ブラウザや node.js で動く Promise ベースのHTTPクライアントである｡REST-API を実行したいときなど､これを使うと実装が簡単にできる｡</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>yarn add axios@0.16.2</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_google_geocoding_api">3.4.2. Google Geocoding API</h4>
+<div class="paragraph">
+<p><a href="https://developers.google.com/maps/documentation/geocoding/intro">Google Geocoding API</a></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">エンドポイント</dt>
+<dd>
+<p><a href="https://maps.googleapis.com/maps/api/geocode/">outputFormat</a></p>
+</dd>
+<dt class="hdlist1">outputFormat</dt>
+<dd>
+<p>json or xml</p>
+</dd>
+<dt class="hdlist1">パタメタ:address</dt>
+<dd>
+<p>住所</p>
+</dd>
+<dt class="hdlist1">パラメタ:key</dt>
+<dd>
+<p>APIキーが必須になった</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>↓/component/App.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import axios from 'axios';
+import React, { Component } from 'react';
+import SearchForm from './SearchForm';
+import GeocodeResult from './GeocodeResult';
+
+const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
+const GOOGLE_MAP_APIKEY = 'AIzaSyCINYzcjOFN4ChmBlhWaWOsKwkA4UQeHn4';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: '',
+      lat: 0,
+      lng: 0,
+    };
+  }
+
+  setErrorMessage(message) {
+    this.setState({
+      address: message,
+      lat: 0,
+      lng: 0,
+    });
+  }
+
+  handlePlaceSubmit(place) {
+    axios
+      .get(GEOCODE_ENDPOINT, {
+        params: {
+          key: GOOGLE_MAP_APIKEY,
+          address: place,
+        },
+      })
+      .then((results) =&gt; {
+        const data = results.data;
+        const result = data.results[0];
+        switch (data.status) {
+          case 'OK': {
+            const location = result.geometry.location;
+            this.setState({
+              address: result.formatted_address,
+              lat: location.lat,
+              lng: location.lng,
+            });
+            break;
+          }
+          case 'ZERO_RESULTS': {
+            this.setErrorMessage('結果が見つかりませんでした');
+            break;
+          }
+          default: {
+            this.setErrorMessage('結果が見つかりませんでした');
+          }
+        }
+      })
+      .catch((error) =&gt; {
+        // console.log(error);
+        this.setErrorMessage('通信に失敗しました');
+      });
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;緯度経度検索&lt;/h1&gt;
+        &lt;SearchForm onSubmit={place =&gt; this.handlePlaceSubmit(place)} /&gt;
+        &lt;GeocodeResult
+          address={this.state.address}
+          lat={this.state.lat}
+          lng={this.state.lng}
+        /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1139,7 +1443,7 @@ export default App;</pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 17:40:04 +0900
+Last updated 2018-12-22 19:50:04 +0900
 </div>
 </div>
 </body>
