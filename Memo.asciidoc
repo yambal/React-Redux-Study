@@ -1,12 +1,15 @@
 == MEMO
 https://www.udemy.com/react-redux-from-beginning/?start=0[最短で学ぶReactとReduxの基礎から実践まで @Udemy]の内容
+
 === yarn のインストール
+
 ==== yarn とは
 YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJavaScriptパッケージマネージャー
 * npm はインストールパッケージの速度および一貫性が不十分
 * npmではパッケージがインストール時にコードを実行することを許可しているため、セキュリティー上の問題がある
 
 https://yarnpkg.com/lang/ja/docs/install/[yarmインストール @yarnpkg.com]
+
 === yarnでインストールするパッケージのバージョンについて
 ----
 axios@0.16.2
@@ -41,13 +44,14 @@ eslint-plugin-import@2.7.0
 eslint-plugin-jsx-a11y@5.1.1
 eslint-plugin-react@7.1.0
 ----
-==== yarn
+
+==== yarn をインストールする
 paccage.json を作成
 ----
 yarn -v
 yarn init
 ----
-==== パッケージを追加していく
+==== ES2015に必要なパッケージをインストールする
 Udemyのコースが作成されたタイミングで利用されたバージョンを指定している
 ----
 yarn add webpack@3.3.0
@@ -65,3 +69,82 @@ babel-preset-react::
 リアクトをコンパイルするためのBabelプリセット
 babel-preset-es2015::
 ES2015 で書かれたソースコードをコンパイルするためのBabelプリセット
+
+== ES2015でのHello world
+↓webpack.config.js
+----
+var publidDir = __dirname + '/public';
+module.exports = {
+  entry: [
+    './src/index.js'
+  ],
+  output: {
+    path: publidDir,
+    publicPath: '/',
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [{
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+      query: {
+        presets: ['react', 'es2015']
+      }
+    }]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: publidDir
+  }
+};
+----
+↓public/index.js
+----
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>udemy react</title>
+  </head>
+  <body>
+    <div class="container">
+        Hello World
+    </div>
+    <script src="bundle.js" charset="utf-8"></script>
+  </body>
+</html>
+----
+↓src/index.js
+----
+// とりあえず空
+----
+
+=== 開発サーバを起動する
+----
+./node_modules/.bin/webpack-dev-server
+----
+ソースコードが変更されると、自動的にコンパイル、更新までを自動的に行ってくれる。 +
+実際にはファイルの実体を生成しない。
+
+webpack.config.js の publicPath + filename にアクセスがあったとき、コンパイル結果を返す
+
+==== コマンドを登録する
+↓package.jsonに追記
+----
+"scripts": {
+  "start" : "./node_modules/.bin/webpack-dev-server"
+},
+----
+↓起動
+----
+yarn run start
+----
+
+=== ビルドを実行する
+----
+./node_modules/.bin/webpack
+----
+webpack.config.js の path + publicPath + filename にコンパイルしたファイルを生成する
