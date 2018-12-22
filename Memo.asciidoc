@@ -333,7 +333,8 @@ function App(props){
 export default App;
 ----
 
-=== Functional Component
+=== Class Component
+↓/src/components/app.jsx
 ----
 import React, { Component } from 'react';
 
@@ -345,3 +346,5 @@ class App extends Component {
 
 export default App;
 ----
+
+== propsを用いたcomponent間の情報伝達

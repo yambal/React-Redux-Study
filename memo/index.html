@@ -465,6 +465,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_scss_を使えるようにする">4. SCSS を使えるようにする</a></li>
 <li><a href="#_reactを使ったhello_world">5. Reactを使ったHello world</a></li>
+<li><a href="#_component_の作り方">6. Component の作り方</a>
+<ul class="sectlevel2">
+<li><a href="#_eslint_を設定する">6.1. ESLint を設定する</a></li>
+<li><a href="#_functional_component">6.2. Functional Component</a></li>
+<li><a href="#_class_component">6.3. Class Component</a></li>
+</ul>
+</li>
+<li><a href="#_propsを用いたcomponent間の情報伝達">7. propsを用いたcomponent間の情報伝達</a></li>
 </ul>
 </div>
 </div>
@@ -895,6 +903,9 @@ module.exports = [
 yarn add react-dom@15.6.1</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>↓src/index.js</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre>import React from 'react';
@@ -905,11 +916,91 @@ ReactDom.render(&lt;div&gt;Hello React&lt;/div&gt;, document.querySelector('.con
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_component_の作り方">6. Component の作り方</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>↓/src/index.js → /src/index.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React from 'react';
+import ReactDom from 'react-dom';
+import App from './components/app';
+
+ReactDom.render(&lt;App /&gt;, document.querySelector('.container'));</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>webpack.config.js の /src/index.js → /src/index.jsx</p>
+</div>
+<div class="sect2">
+<h3 id="_eslint_を設定する">6.1. ESLint を設定する</h3>
+<div class="paragraph">
+<p>Atom にJSXを解釈させるプラグインを追加<br>
+language-javascript-jsx</p>
+</div>
+<div class="paragraph">
+<p>document 等にチェックエラーが入るが、ブラウザなのでOK、という設定<br>
+↓.eslintrc.js に追加</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>"env": {
+  "browser" : true
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_functional_component">6.2. Functional Component</h3>
+<div class="paragraph">
+<p>↓/src/components/app.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React from 'react';
+
+function App(props){
+  return (&lt;div&gt;Hello App&lt;/div&gt;);
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_class_component">6.3. Class Component</h3>
+<div class="paragraph">
+<p>↓/src/components/app.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component } from 'react';
+
+class App extends Component {
+  render() {
+    return (&lt;div&gt;Hello Component&lt;/div&gt;);
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_propsを用いたcomponent間の情報伝達">7. propsを用いたcomponent間の情報伝達</h2>
+<div class="sectionbody">
+
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 15:32:47 +0900
+Last updated 2018-12-22 16:14:27 +0900
 </div>
 </div>
 </body>
