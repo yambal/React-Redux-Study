@@ -1,1 +1,4 @@
-alert('Hello');
+import React from 'react';
+import ReactDom from 'react-dom';
+
+ReactDom.render(<div>Hello React</div>, document.querySelector('.container'));

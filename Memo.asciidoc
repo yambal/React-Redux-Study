@@ -1,9 +1,21 @@
-== MEMO
+:lang: ja
+:doctype: book
+:chapter-label:
+:toc-title: 目次
+:toc: left
+:sectnums:
+:docname: 最短で学ぶReactとReduxの基礎から実践まで
+:author: やまもとじゅん
+:revnumber: 0.1
+:revdate: 2018/12/22
+
+= 最短で学ぶReactとReduxの基礎から実践まで
+[.lead]
 https://www.udemy.com/react-redux-from-beginning/?start=0[最短で学ぶReactとReduxの基礎から実践まで @Udemy]の内容
 
-=== yarn のインストール
+== yarn のインストール
 
-==== yarn とは
+=== yarn とは
 YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJavaScriptパッケージマネージャー
 
 * npm はインストールパッケージの速度および一貫性が不十分
@@ -46,13 +58,14 @@ eslint-plugin-jsx-a11y@5.1.1
 eslint-plugin-react@7.1.0
 ----
 
-==== yarn をインストールする
+=== yarn をインストールする
 paccage.json を作成
 ----
 yarn -v
 yarn init
 ----
-==== ES2015に必要なパッケージをインストールする
+
+=== ES2015に必要なパッケージをインストールする
 Udemyのコースが作成されたタイミングで利用されたバージョンを指定している
 ----
 yarn add webpack@3.3.0
@@ -269,4 +282,18 @@ scss のために追加された entry, output に合わせて....
 ↓./public/indexhtml に追記
 ----
 <link rel="stylesheet" href="bundle.css">
+----
+
+== Reactを使ったHello world
+
+----
+yarn add react@15.6.1
+yarn add react-dom@15.6.1
+----
+
+----
+import React from 'react';
+import ReactDom from 'react-dom';
+
+ReactDom.render(<div>Hello React</div>, document.querySelector('.container'));
 ----
