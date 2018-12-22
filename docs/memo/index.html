@@ -1682,8 +1682,35 @@ SearchPage.propTypes = {
 <div class="sect2">
 <h3 id="_getパラメータをアプリ内で利用する">5.4. getパラメータをアプリ内で利用する</h3>
 <div class="paragraph">
+<p>Route に追加されている props を利用する<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>props.location.search</strong></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_key_value_を切り出すパッケージを読み込む">5.4.1. Key-Value を切り出すパッケージを読み込む</h4>
+<div class="listingblock">
+<div class="content">
+<pre>yarn add query-string@5.0.0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓例えば、Router で getパラメタ place を取り出す方法</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>const params = queryString.parse(this.props.location.search);
+const place = params.place;</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>==
 <a href="https://ics.media/entry/16028" class="bare">https://ics.media/entry/16028</a></p>
+</div>
 </div>
 </div>
 </div>
@@ -1692,7 +1719,7 @@ SearchPage.propTypes = {
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-23 01:43:38 +0900
+Last updated 2018-12-23 02:48:07 +0900
 </div>
 </div>
 </body>

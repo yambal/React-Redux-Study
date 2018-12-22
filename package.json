@@ -27,6 +27,7 @@
     "import-glob-loader": "1.1.0",
     "node-sass": "^4.11.0",
     "prop-types": "15.5.10",
+    "query-string": "5.0.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-router-dom": "4.1.2",

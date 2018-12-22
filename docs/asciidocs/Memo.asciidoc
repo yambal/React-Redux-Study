@@ -885,6 +885,19 @@ SearchPage.propTypes = {
 ----
 
 === getパラメータをアプリ内で利用する
+Route に追加されている props を利用する +
+
+* *props.location.search*
+
+==== Key-Value を切り出すパッケージを読み込む
+----
+yarn add query-string@5.0.0
+----
+↓例えば、Router で getパラメタ place を取り出す方法
+----
+const params = queryString.parse(this.props.location.search);
+const place = params.place;
+----
 
 ==
 https://ics.media/entry/16028
