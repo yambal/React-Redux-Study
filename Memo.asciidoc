@@ -13,9 +13,9 @@
 [.lead]
 https://www.udemy.com/react-redux-from-beginning/?start=0[最短で学ぶReactとReduxの基礎から実践まで @Udemy]の内容
 
-== yarn のインストール
-
-=== yarn とは
+== 環境構築とHello world
+=== yarn のインストール
+==== yarn とは
 YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJavaScriptパッケージマネージャー
 
 * npm はインストールパッケージの速度および一貫性が不十分
@@ -23,7 +23,7 @@ YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJ
 
 https://yarnpkg.com/lang/ja/docs/install/[yarmインストール @yarnpkg.com]
 
-=== yarnでインストールするパッケージのバージョンについて
+==== yarnでインストールするパッケージのバージョンについて
 ----
 axios@0.16.2
 babel-core@6.25.0
@@ -58,14 +58,14 @@ eslint-plugin-jsx-a11y@5.1.1
 eslint-plugin-react@7.1.0
 ----
 
-=== yarn をインストールする
+==== yarn をインストールする
 paccage.json を作成
 ----
 yarn -v
 yarn init
 ----
 
-=== ES2015に必要なパッケージをインストールする
+==== ES2015に必要なパッケージをインストールする
 Udemyのコースが作成されたタイミングで利用されたバージョンを指定している
 ----
 yarn add webpack@3.3.0
@@ -84,7 +84,7 @@ babel-preset-react::
 babel-preset-es2015::
 ES2015 で書かれたソースコードをコンパイルするためのBabelプリセット
 
-== ES2015でのHello world
+=== ES2015でのHello world
 ↓webpack.config.js
 ----
 var publidDir = __dirname + '/public';
@@ -136,7 +136,7 @@ module.exports = {
 // とりあえず空
 ----
 
-=== 開発サーバを起動する
+==== 開発サーバを起動する
 ----
 ./node_modules/.bin/webpack-dev-server
 ----
@@ -145,7 +145,7 @@ module.exports = {
 
 webpack.config.js の publicPath + filename にアクセスがあったとき、コンパイル結果を返す
 
-==== コマンドを登録する
+===== コマンドを登録する
 ↓package.jsonに追記
 ----
 "scripts": {
@@ -158,20 +158,20 @@ webpack.config.js の publicPath + filename にアクセスがあったとき、
 yarn run start
 ----
 
-=== ビルドを実行する
+==== ビルドを実行する
 ----
 ./node_modules/.bin/webpack
 ----
 webpack.config.js の path + publicPath + filename にコンパイルしたファイルを生成する
 
-== Eslint のインストール
+=== Eslint のインストール
 文法のチェックツール
 ----
 yarn add eslint@3.19.0
 yarn add eslint-plugin-react@7.1.0
 ----
 
-=== 設定ファイルを作成する
+==== 設定ファイルを作成する
 ----
 ./node_modules/.bin/eslint --init
 ----
@@ -194,7 +194,7 @@ yarn add circular-json@0.3.3
 ----
 Atomのパッケージと連携するとリアルタイムに検証してくれる
 
-=== Atom のプラグイン
+==== Atom のプラグイン
 * es6-javascript
 * intentions
 * busy-signal
@@ -204,7 +204,7 @@ Atomのパッケージと連携するとリアルタイムに検証してくれ�
 
 NOTE: インストール後はリフレッシュする
 
-== SCSS を使えるようにする
+=== SCSS を使えるようにする
 ----
 yarn add node-sass(@4.5.3)
 yarn add style-loader@0.18.2
@@ -284,7 +284,7 @@ scss のために追加された entry, output に合わせて....
 <link rel="stylesheet" href="bundle.css">
 ----
 
-== Reactを使ったHello world
+=== Reactを使ったHello world
 
 ----
 yarn add react@15.6.1
@@ -298,7 +298,8 @@ import ReactDom from 'react-dom';
 ReactDom.render(<div>Hello React</div>, document.querySelector('.container'));
 ----
 
-== Component の作り方
+== Reactの基礎
+=== Component の作り方
 ↓/src/index.js → /src/index.jsx
 ----
 import React from 'react';
@@ -309,7 +310,7 @@ ReactDom.render(<App />, document.querySelector('.container'));
 ----
 webpack.config.js の /src/index.js → /src/index.jsx
 
-=== ESLint を設定する
+==== ESLint を設定する
 Atom にJSXを解釈させるプラグインを追加 +
 language-javascript-jsx
 
@@ -321,7 +322,7 @@ document 等にチェックエラーが入るが、ブラウザなのでOK、と
 }
 ----
 
-=== Functional Component
+==== Functional Component
 ↓/src/components/app.jsx
 ----
 import React from 'react';
@@ -333,7 +334,7 @@ function App(props){
 export default App;
 ----
 
-=== Class Component
+==== Class Component
 ↓/src/components/app.jsx
 ----
 import React, { Component } from 'react';
@@ -347,7 +348,7 @@ class App extends Component {
 export default App;
 ----
 
-== propsを用いたcomponent間の情報伝達
+=== propsを用いたcomponent間の情報伝達
 ステートレスなコンポーネントを作ってみる +
 ↓/src/components/greeting.jsx
 ----
@@ -377,7 +378,7 @@ class App extends Component {
 export default App;
 ----
 
-== stateを用いてcomponentに状態を持たせる
+=== stateを用いてcomponentに状態を持たせる
 ----
 import React, { Component } from 'react';
 import Greeting from './greeting';
@@ -416,3 +417,42 @@ class App extends Component {
 
 export default App;
 ----
+
+=== ユーザーの入力情報を取得する
+----
+import React, { Component } from 'react';
+import Greeting from './greeting';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Jhon',
+    };
+  }
+
+  handleChangeName(name) {
+    this.setState({
+      name,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          value={this.state.name}
+          onChange={e => this.handleChangeName(e.target.value)}
+        />
+        <button onClick={() => this.handleChangeName('Bob')}>Bob</button>
+        <Greeting name={this.state.name} />
+      </div>
+    );
+  }
+}
+
+export default App;
+----
+
+== Reactを使った実践的なWEBアプリケーションの作成
