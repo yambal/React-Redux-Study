@@ -290,10 +290,58 @@ scss のために追加された entry, output に合わせて....
 yarn add react@15.6.1
 yarn add react-dom@15.6.1
 ----
-
+↓src/index.js
 ----
 import React from 'react';
 import ReactDom from 'react-dom';
 
 ReactDom.render(<div>Hello React</div>, document.querySelector('.container'));
+----
+
+== Component の作り方
+↓/src/index.js → /src/index.jsx
+----
+import React from 'react';
+import ReactDom from 'react-dom';
+import App from './components/app';
+
+ReactDom.render(<App />, document.querySelector('.container'));
+----
+webpack.config.js の /src/index.js → /src/index.jsx
+
+=== ESLint を設定する
+Atom にJSXを解釈させるプラグインを追加 +
+language-javascript-jsx
+
+document 等にチェックエラーが入るが、ブラウザなのでOK、という設定 +
+↓.eslintrc.js に追加
+----
+"env": {
+  "browser" : true
+}
+----
+
+=== Functional Component
+↓/src/components/app.jsx
+----
+import React from 'react';
+
+function App(props){
+  return (<div>Hello App</div>);
+}
+
+export default App;
+----
+
+=== Functional Component
+----
+import React, { Component } from 'react';
+
+class App extends Component {
+  render() {
+    return (<div>Hello Component</div>);
+  }
+}
+
+export default App;
 ----
