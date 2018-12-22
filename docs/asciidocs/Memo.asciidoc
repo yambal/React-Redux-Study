@@ -456,3 +456,13 @@ export default App;
 ----
 
 == Reactを使った実践的なWEBアプリケーションの作成
+=== 構成
+image::../images/fig01.PNG[Fig1]
+prace::
+入力された文字列
+address::
+住所
+lat::
+緯度
+lng::
+経度

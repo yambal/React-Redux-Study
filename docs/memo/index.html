@@ -443,46 +443,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">目次</div>
 <ul class="sectlevel1">
-<li><a href="#_yarn_のインストール">1. yarn のインストール</a>
+<li><a href="#_環境構築とhello_world">1. 環境構築とHello world</a>
 <ul class="sectlevel2">
-<li><a href="#_yarn_とは">1.1. yarn とは</a></li>
-<li><a href="#_yarnでインストールするパッケージのバージョンについて">1.2. yarnでインストールするパッケージのバージョンについて</a></li>
-<li><a href="#_yarn_をインストールする">1.3. yarn をインストールする</a></li>
-<li><a href="#_es2015に必要なパッケージをインストールする">1.4. ES2015に必要なパッケージをインストールする</a></li>
+<li><a href="#_yarn_のインストール">1.1. yarn のインストール</a></li>
+<li><a href="#_es2015でのhello_world">1.2. ES2015でのHello world</a></li>
+<li><a href="#_eslint_のインストール">1.3. Eslint のインストール</a></li>
+<li><a href="#_scss_を使えるようにする">1.4. SCSS を使えるようにする</a></li>
+<li><a href="#_reactを使ったhello_world">1.5. Reactを使ったHello world</a></li>
 </ul>
 </li>
-<li><a href="#_es2015でのhello_world">2. ES2015でのHello world</a>
+<li><a href="#_reactの基礎">2. Reactの基礎</a>
 <ul class="sectlevel2">
-<li><a href="#_開発サーバを起動する">2.1. 開発サーバを起動する</a></li>
-<li><a href="#_ビルドを実行する">2.2. ビルドを実行する</a></li>
+<li><a href="#_component_の作り方">2.1. Component の作り方</a></li>
+<li><a href="#_propsを用いたcomponent間の情報伝達">2.2. propsを用いたcomponent間の情報伝達</a></li>
+<li><a href="#_stateを用いてcomponentに状態を持たせる">2.3. stateを用いてcomponentに状態を持たせる</a></li>
+<li><a href="#_ユーザーの入力情報を取得する">2.4. ユーザーの入力情報を取得する</a></li>
 </ul>
 </li>
-<li><a href="#_eslint_のインストール">3. Eslint のインストール</a>
+<li><a href="#_reactを使った実践的なwebアプリケーションの作成">3. Reactを使った実践的なWEBアプリケーションの作成</a>
 <ul class="sectlevel2">
-<li><a href="#_設定ファイルを作成する">3.1. 設定ファイルを作成する</a></li>
-<li><a href="#_atom_のプラグイン">3.2. Atom のプラグイン</a></li>
+<li><a href="#_構成">3.1. 構成</a></li>
 </ul>
 </li>
-<li><a href="#_scss_を使えるようにする">4. SCSS を使えるようにする</a></li>
-<li><a href="#_reactを使ったhello_world">5. Reactを使ったHello world</a></li>
-<li><a href="#_component_の作り方">6. Component の作り方</a>
-<ul class="sectlevel2">
-<li><a href="#_eslint_を設定する">6.1. ESLint を設定する</a></li>
-<li><a href="#_functional_component">6.2. Functional Component</a></li>
-<li><a href="#_class_component">6.3. Class Component</a></li>
-</ul>
-</li>
-<li><a href="#_propsを用いたcomponent間の情報伝達">7. propsを用いたcomponent間の情報伝達</a></li>
-<li><a href="#_stateを用いてcomponentに状態を持たせる">8. stateを用いてcomponentに状態を持たせる</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_yarn_のインストール">1. yarn のインストール</h2>
+<h2 id="_環境構築とhello_world">1. 環境構築とHello world</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_yarn_とは">1.1. yarn とは</h3>
+<h3 id="_yarn_のインストール">1.1. yarn のインストール</h3>
+<div class="sect3">
+<h4 id="_yarn_とは">1.1.1. yarn とは</h4>
 <div class="paragraph">
 <p>YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJavaScriptパッケージマネージャー</p>
 </div>
@@ -500,8 +493,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><a href="https://yarnpkg.com/lang/ja/docs/install/">yarmインストール @yarnpkg.com</a></p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_yarnでインストールするパッケージのバージョンについて">1.2. yarnでインストールするパッケージのバージョンについて</h3>
+<div class="sect3">
+<h4 id="_yarnでインストールするパッケージのバージョンについて">1.1.2. yarnでインストールするパッケージのバージョンについて</h4>
 <div class="listingblock">
 <div class="content">
 <pre>axios@0.16.2
@@ -538,8 +531,8 @@ eslint-plugin-react@7.1.0</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_yarn_をインストールする">1.3. yarn をインストールする</h3>
+<div class="sect3">
+<h4 id="_yarn_をインストールする">1.1.3. yarn をインストールする</h4>
 <div class="paragraph">
 <p>paccage.json を作成</p>
 </div>
@@ -550,8 +543,8 @@ yarn init</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_es2015に必要なパッケージをインストールする">1.4. ES2015に必要なパッケージをインストールする</h3>
+<div class="sect3">
+<h4 id="_es2015に必要なパッケージをインストールする">1.1.4. ES2015に必要なパッケージをインストールする</h4>
 <div class="paragraph">
 <p>Udemyのコースが作成されたタイミングで利用されたバージョンを指定している</p>
 </div>
@@ -587,10 +580,8 @@ yarn add babel-preset-es2015@6.24.1</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_es2015でのhello_world">2. ES2015でのHello world</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_es2015でのhello_world">1.2. ES2015でのHello world</h3>
 <div class="paragraph">
 <p>↓webpack.config.js</p>
 </div>
@@ -653,8 +644,8 @@ module.exports = {
 <pre>// とりあえず空</pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_開発サーバを起動する">2.1. 開発サーバを起動する</h3>
+<div class="sect3">
+<h4 id="_開発サーバを起動する">1.2.1. 開発サーバを起動する</h4>
 <div class="listingblock">
 <div class="content">
 <pre>./node_modules/.bin/webpack-dev-server</pre>
@@ -667,8 +658,8 @@ module.exports = {
 <div class="paragraph">
 <p>webpack.config.js の publicPath + filename にアクセスがあったとき、コンパイル結果を返す</p>
 </div>
-<div class="sect3">
-<h4 id="_コマンドを登録する">2.1.1. コマンドを登録する</h4>
+<div class="sect4">
+<h5 id="_コマンドを登録する">コマンドを登録する</h5>
 <div class="paragraph">
 <p>↓package.jsonに追記</p>
 </div>
@@ -689,8 +680,8 @@ module.exports = {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ビルドを実行する">2.2. ビルドを実行する</h3>
+<div class="sect3">
+<h4 id="_ビルドを実行する">1.2.2. ビルドを実行する</h4>
 <div class="listingblock">
 <div class="content">
 <pre>./node_modules/.bin/webpack</pre>
@@ -701,10 +692,8 @@ module.exports = {
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_eslint_のインストール">3. Eslint のインストール</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_eslint_のインストール">1.3. Eslint のインストール</h3>
 <div class="paragraph">
 <p>文法のチェックツール</p>
 </div>
@@ -714,8 +703,8 @@ module.exports = {
 yarn add eslint-plugin-react@7.1.0</pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_設定ファイルを作成する">3.1. 設定ファイルを作成する</h3>
+<div class="sect3">
+<h4 id="_設定ファイルを作成する">1.3.1. 設定ファイルを作成する</h4>
 <div class="listingblock">
 <div class="content">
 <pre>./node_modules/.bin/eslint --init</pre>
@@ -758,8 +747,8 @@ yarn add circular-json@0.3.3</pre>
 <p>Atomのパッケージと連携するとリアルタイムに検証してくれる</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_atom_のプラグイン">3.2. Atom のプラグイン</h3>
+<div class="sect3">
+<h4 id="_atom_のプラグイン">1.3.2. Atom のプラグイン</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -796,10 +785,8 @@ yarn add circular-json@0.3.3</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_scss_を使えるようにする">4. SCSS を使えるようにする</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_scss_を使えるようにする">1.4. SCSS を使えるようにする</h3>
 <div class="listingblock">
 <div class="content">
 <pre>yarn add node-sass(@4.5.3)
@@ -894,10 +881,8 @@ module.exports = [
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_reactを使ったhello_world">5. Reactを使ったHello world</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_reactを使ったhello_world">1.5. Reactを使ったHello world</h3>
 <div class="listingblock">
 <div class="content">
 <pre>yarn add react@15.6.1
@@ -917,9 +902,12 @@ ReactDom.render(&lt;div&gt;Hello React&lt;/div&gt;, document.querySelector('.con
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_component_の作り方">6. Component の作り方</h2>
+<h2 id="_reactの基礎">2. Reactの基礎</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_component_の作り方">2.1. Component の作り方</h3>
 <div class="paragraph">
 <p>↓/src/index.js → /src/index.jsx</p>
 </div>
@@ -935,8 +923,8 @@ ReactDom.render(&lt;App /&gt;, document.querySelector('.container'));</pre>
 <div class="paragraph">
 <p>webpack.config.js の /src/index.js → /src/index.jsx</p>
 </div>
-<div class="sect2">
-<h3 id="_eslint_を設定する">6.1. ESLint を設定する</h3>
+<div class="sect3">
+<h4 id="_eslint_を設定する">2.1.1. ESLint を設定する</h4>
 <div class="paragraph">
 <p>Atom にJSXを解釈させるプラグインを追加<br>
 language-javascript-jsx</p>
@@ -953,8 +941,8 @@ language-javascript-jsx</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_functional_component">6.2. Functional Component</h3>
+<div class="sect3">
+<h4 id="_functional_component">2.1.2. Functional Component</h4>
 <div class="paragraph">
 <p>↓/src/components/app.jsx</p>
 </div>
@@ -970,8 +958,8 @@ export default App;</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_class_component">6.3. Class Component</h3>
+<div class="sect3">
+<h4 id="_class_component">2.1.3. Class Component</h4>
 <div class="paragraph">
 <p>↓/src/components/app.jsx</p>
 </div>
@@ -990,10 +978,8 @@ export default App;</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_propsを用いたcomponent間の情報伝達">7. propsを用いたcomponent間の情報伝達</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_propsを用いたcomponent間の情報伝達">2.2. propsを用いたcomponent間の情報伝達</h3>
 <div class="paragraph">
 <p>ステートレスなコンポーネントを作ってみる<br>
 ↓/src/components/greeting.jsx</p>
@@ -1031,10 +1017,8 @@ export default App;</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_stateを用いてcomponentに状態を持たせる">8. stateを用いてcomponentに状態を持たせる</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_stateを用いてcomponentに状態を持たせる">2.3. stateを用いてcomponentに状態を持たせる</h3>
 <div class="listingblock">
 <div class="content">
 <pre>import React, { Component } from 'react';
@@ -1076,12 +1060,86 @@ export default App;</pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_ユーザーの入力情報を取得する">2.4. ユーザーの入力情報を取得する</h3>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component } from 'react';
+import Greeting from './greeting';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Jhon',
+    };
+  }
+
+  handleChangeName(name) {
+    this.setState({
+      name,
+    });
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;input
+          type="text"
+          value={this.state.name}
+          onChange={e =&gt; this.handleChangeName(e.target.value)}
+        /&gt;
+        &lt;button onClick={() =&gt; this.handleChangeName('Bob')}&gt;Bob&lt;/button&gt;
+        &lt;Greeting name={this.state.name} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reactを使った実践的なwebアプリケーションの作成">3. Reactを使った実践的なWEBアプリケーションの作成</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_構成">3.1. 構成</h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/fig01.PNG" alt="Fig1">
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">prace</dt>
+<dd>
+<p>入力された文字列</p>
+</dd>
+<dt class="hdlist1">address</dt>
+<dd>
+<p>住所</p>
+</dd>
+<dt class="hdlist1">lat</dt>
+<dd>
+<p>緯度</p>
+</dd>
+<dt class="hdlist1">lng</dt>
+<dd>
+<p>経度</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 16:38:27 +0900
+Last updated 2018-12-22 17:40:04 +0900
 </div>
 </div>
 </body>
