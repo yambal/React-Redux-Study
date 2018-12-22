@@ -804,9 +804,11 @@ export const staticMap = (location, width, height, zoom) => `https://maps.google
 ----
 
 == Component のライフサイクル
-image::../images/fig02.PNG[Fig1]
+image::../images/fig02.PNG[Fig2]
 
 == React Router
+image::../images/fig03.PNG[Fig3]
+
 === React Router のインストール
 ----
 yarn add react-router-dom@4.1.2
