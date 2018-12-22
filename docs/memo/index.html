@@ -470,6 +470,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_component_のライフサイクル">4. Component のライフサイクル</a></li>
+<li><a href="#_react_router">5. React Router</a>
+<ul class="sectlevel2">
+<li><a href="#_react_router_のインストール">5.1. React Router のインストール</a></li>
+<li><a href="#_メニューとページを作成する">5.2. メニューとページを作成する</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1557,11 +1563,85 @@ export const staticMap = (location, width, height, zoom) =&gt; `https://maps.goo
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_react_router">5. React Router</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_react_router_のインストール">5.1. React Router のインストール</h3>
+<div class="listingblock">
+<div class="content">
+<pre>yarn add react-router-dom@4.1.2</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_メニューとページを作成する">5.2. メニューとページを作成する</h3>
+<div class="paragraph">
+<p>↓/src/component/App.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+} from 'react-router-dom';
+
+import SearchPage from './SearchPage';
+import AboutPage from './AboutPage';
+
+const App = () =&gt; (
+  &lt;Router&gt;
+    &lt;div className="app"&gt;
+      &lt;ul className="left-nav"&gt;
+        &lt;li&gt;&lt;Link to="/"&gt;緯度経度検索&lt;/Link&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;Link to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;Switch&gt;
+        &lt;Route exact path="/" component={SearchPage} /&gt;
+        &lt;Route exact path="/about" component={AboutPage} /&gt;
+      &lt;/Switch&gt;
+    &lt;/div&gt;
+  &lt;/Router&gt;
+);
+
+export default App;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓/src/components/SearchPage.jsx<br>
+class SearchPage として切り出す</p>
+</div>
+<div class="paragraph">
+<p>↓/src/components/AboutPage.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React from 'react';
+
+const AboutPage = () =&gt; (
+  &lt;div className="about"&gt;
+    &lt;h1&gt;About&lt;/h1&gt;
+  &lt;/div&gt;
+);
+
+export default AboutPage;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>==
+<a href="https://ics.media/entry/16028" class="bare">https://ics.media/entry/16028</a></p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-23 00:06:32 +0900
+Last updated 2018-12-23 01:11:45 +0900
 </div>
 </div>
 </body>

@@ -805,3 +805,58 @@ export const staticMap = (location, width, height, zoom) => `https://maps.google
 
 == Component のライフサイクル
 image::../images/fig02.PNG[Fig1]
+
+== React Router
+=== React Router のインストール
+----
+yarn add react-router-dom@4.1.2
+----
+=== メニューとページを作成する
+↓/src/component/App.jsx
+----
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+} from 'react-router-dom';
+
+import SearchPage from './SearchPage';
+import AboutPage from './AboutPage';
+
+const App = () => (
+  <Router>
+    <div className="app">
+      <ul className="left-nav">
+        <li><Link to="/">緯度経度検索</Link></li>
+        <li><Link to="/about">About</Link></li>
+      </ul>
+      <Switch>
+        <Route exact path="/" component={SearchPage} />
+        <Route exact path="/about" component={AboutPage} />
+      </Switch>
+    </div>
+  </Router>
+);
+
+export default App;
+----
+↓/src/components/SearchPage.jsx +
+class SearchPage として切り出す
+
+↓/src/components/AboutPage.jsx
+----
+import React from 'react';
+
+const AboutPage = () => (
+  <div className="about">
+    <h1>About</h1>
+  </div>
+);
+
+export default AboutPage;
+----
+
+==
+https://ics.media/entry/16028
