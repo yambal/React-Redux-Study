@@ -5,6 +5,7 @@ https://www.udemy.com/react-redux-from-beginning/?start=0[最短で学ぶReact�
 
 ==== yarn とは
 YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJavaScriptパッケージマネージャー
+
 * npm はインストールパッケージの速度および一貫性が不十分
 * npmではパッケージがインストール時にコードを実行することを許可しているため、セキュリティー上の問題がある
 
@@ -189,3 +190,83 @@ Atomのパッケージと連携するとリアルタイムに検証してくれ�
 * linter-eslint
 
 NOTE: インストール後はリフレッシュする
+
+== SCSS を使えるようにする
+----
+yarn add node-sass(@4.5.3)
+yarn add style-loader@0.18.2
+yarn add css-loader@0.28.4
+yarn add sass-loader@6.0.6
+yarn add import-glob-loader@1.1.0
+yarn add extract-text-webpack-plugin@3.0.0
+----
+↓webpack.config.js
+----
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const publidDir = path.join(__dirname, '/public');
+module.exports = [
+  {
+    entry: [
+      './src/index.js',
+    ],
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'bundle.js',
+    },
+    module: {
+      loaders: [{
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015'],
+        },
+      }],
+    },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+      historyApiFallback: true,
+      contentBase: publidDir,
+    },
+  },
+  {
+    entry: {
+      style: './stylesheets/index.scss',
+    },
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'bundle.css',
+    },
+    module: {
+      loaders: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
+        },
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' }),
+        },
+      ],
+    },
+    plugins: [
+      new ExtractTextPlugin('bundle.css'),
+    ],
+  },
+];
+----
+scss のために追加された entry, output に合わせて....
+
+↓./stylesheets/index.scss
+----
+/* 一旦空 */
+----
+↓./public/indexhtml に追記
+----
+<link rel="stylesheet" href="bundle.css">
+----
