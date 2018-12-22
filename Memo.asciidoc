@@ -138,7 +138,8 @@ webpack.config.js の publicPath + filename にアクセスがあったとき、
   "start" : "./node_modules/.bin/webpack-dev-server"
 },
 ----
-↓起動
+
+起動
 ----
 yarn run start
 ----
@@ -148,3 +149,43 @@ yarn run start
 ./node_modules/.bin/webpack
 ----
 webpack.config.js の path + publicPath + filename にコンパイルしたファイルを生成する
+
+== Eslint のインストール
+文法のチェックツール
+----
+yarn add eslint@3.19.0
+yarn add eslint-plugin-react@7.1.0
+----
+
+=== 設定ファイルを作成する
+----
+./node_modules/.bin/eslint --init
+----
+NOTE: ./node_modules/.bin/eslint --init を実行すると、./node_modules/.bin/eslint の実行ファイルが消えてしまい、次の操作でNo such file or directoryのエラーが発生する +
+init実行後に$ yarn install を実行すると復活
+
+なんか足らないようなので以下を実行
+----
+yarn add eslint-plugin-react@7.1.0
+yarn add eslint-plugin-jsx-a11y@5.1.1
+yarn add eslint-plugin-import@2.7.0
+yarn add eslint-config-airbnb@15.0.2
+yarn add circular-json@0.3.3
+----
+
+チェック
+
+----
+./node_modules/.bin/eslint src/index.js
+----
+Atomのパッケージと連携するとリアルタイムに検証してくれる
+
+=== Atom のプラグイン
+* es6-javascript
+* intentions
+* busy-signal
+* linter
+* linter-ui-default
+* linter-eslint
+
+NOTE: インストール後はリフレッシュする
