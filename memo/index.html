@@ -473,6 +473,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_propsを用いたcomponent間の情報伝達">7. propsを用いたcomponent間の情報伝達</a></li>
+<li><a href="#_stateを用いてcomponentに状態を持たせる">8. stateを用いてcomponentに状態を持たせる</a></li>
 </ul>
 </div>
 </div>
@@ -1031,11 +1032,56 @@ export default App;</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_stateを用いてcomponentに状態を持たせる">8. stateを用いてcomponentに状態を持たせる</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component } from 'react';
+import Greeting from './greeting';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Jhon',
+    };
+  }
+
+  handleMouseOver() {
+    this.setState({
+      name: 'Bob',
+    });
+  }
+
+  handleMouseOut() {
+    this.setState({
+      name: 'Jhon',
+    });
+  }
+
+  render() {
+    return (
+      &lt;div
+        onMouseOver={() =&gt; this.handleMouseOver()}
+        onMouseOut={() =&gt; this.handleMouseOut()}
+      &gt;
+        &lt;Greeting name={this.state.name} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 16:25:31 +0900
+Last updated 2018-12-22 16:38:27 +0900
 </div>
 </div>
 </body>
