@@ -1436,6 +1436,65 @@ export default App;</pre>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_google_mapの導入">3.4.3. Google Mapの導入</h4>
+<div class="paragraph">
+<p>react-google-maps が無駄にややこしいので Static Map にした</p>
+</div>
+<div class="paragraph">
+<p>↓/components/Map.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { PropTypes } from 'react';
+
+const GOOGLE_MAP_APIKEY = 'AIzaSyCINYzcjOFN4ChmBlhWaWOsKwkA4UQeHn4';
+
+const Map = ({ lat, lng, width, height, zoom }) =&gt; (
+  &lt;img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&amp;size=${width}x${height}&amp;zoom=${zoom}&amp;key=${GOOGLE_MAP_APIKEY}`} alt="map" /&gt;
+);
+
+Map.propTypes = {
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  zoom: PropTypes.number,
+};
+
+Map.defaultProps = {
+  lat: 0,
+  lng: 0,
+  width: 400,
+  height: 400,
+  zoom: 18,
+};
+
+export default Map;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓/components/Apps.jsx の render 部分</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>render() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;緯度経度検索&lt;/h1&gt;
+      &lt;SearchForm onSubmit={place =&gt; this.handlePlaceSubmit(place)} /&gt;
+      &lt;GeocodeResult
+        address={this.state.address}
+        lat={this.state.lat}
+        lng={this.state.lng}
+      /&gt;
+      &lt;Map lat={this.state.lat} lng={this.state.lng} /&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1443,7 +1502,7 @@ export default App;</pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 19:50:04 +0900
+Last updated 2018-12-22 22:36:30 +0900
 </div>
 </div>
 </body>
