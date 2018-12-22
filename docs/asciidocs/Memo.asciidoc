@@ -802,3 +802,6 @@ export const geocode = place =>
 
 export const staticMap = (location, width, height, zoom) => `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&size=${width}x${height}&zoom=${zoom}&key=${GOOGLE_MAP_APIKEY}`;
 ----
+
+== Component のライフサイクル
+image::../images/fig02.PNG[Fig1]
