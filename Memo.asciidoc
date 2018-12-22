@@ -348,3 +348,31 @@ export default App;
 ----
 
 == propsを用いたcomponent間の情報伝達
+ステートレスなコンポーネントを作ってみる +
+↓/src/components/greeting.jsx
+----
+import React, { PropTypes } from 'react';
+
+function Greeting(props) {
+  return (<div>Hi, {props.name}</div>);
+}
+
+Greeting.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default Greeting;
+----
+↓/src/components/index.jsx
+----
+import React, { Component } from 'react';
+import Greeting from './greeting';
+
+class App extends Component {
+  render() {
+    return (<Greeting name="June" />);
+  }
+}
+
+export default App;
+----

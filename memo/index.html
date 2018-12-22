@@ -993,14 +993,49 @@ export default App;</pre>
 <div class="sect1">
 <h2 id="_propsを用いたcomponent間の情報伝達">7. propsを用いたcomponent間の情報伝達</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>ステートレスなコンポーネントを作ってみる<br>
+↓/src/components/greeting.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { PropTypes } from 'react';
 
+function Greeting(props) {
+  return (&lt;div&gt;Hi, {props.name}&lt;/div&gt;);
+}
+
+Greeting.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default Greeting;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓/src/components/index.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React, { Component } from 'react';
+import Greeting from './greeting';
+
+class App extends Component {
+  render() {
+    return (&lt;Greeting name="June" /&gt;);
+  }
+}
+
+export default App;</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 16:14:27 +0900
+Last updated 2018-12-22 16:25:31 +0900
 </div>
 </div>
 </body>
