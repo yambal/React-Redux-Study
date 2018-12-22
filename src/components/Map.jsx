@@ -1,26 +1,24 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const GOOGLE_MAP_APIKEY = 'AIzaSyCINYzcjOFN4ChmBlhWaWOsKwkA4UQeHn4';
+import { staticMap } from '../domain/Geocoder';
 
-const Map = ({ lat, lng, width, height, zoom }) => (
+const Map = ({ location, width, height, zoom }) => (
   <img
     className="map"
-    src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&size=${width}x${height}&zoom=${zoom}&key=${GOOGLE_MAP_APIKEY}`}
+    src={staticMap(location, width, height, zoom)}
     alt="map"
   />
 );
 
 Map.propTypes = {
-  lat: PropTypes.number,
-  lng: PropTypes.number,
+  location: PropTypes.objectOf(PropTypes.number).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   zoom: PropTypes.number,
 };
 
 Map.defaultProps = {
-  lat: 0,
-  lng: 0,
   width: 400,
   height: 400,
   zoom: 18,

@@ -466,6 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_searchform_コンポーネント">3.2. SearchForm コンポーネント</a></li>
 <li><a href="#_geocoderesultコンポーネント">3.3. GeocodeResultコンポーネント</a></li>
 <li><a href="#_google_geocoding_api_に問い合わせ結果を表示する">3.4. Google Geocoding API に問い合わせ、結果を表示する</a></li>
+<li><a href="#_リファクタリング">3.5. リファクタリング</a></li>
 </ul>
 </li>
 </ul>
@@ -1496,13 +1497,60 @@ export default Map;</pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_リファクタリング">3.5. リファクタリング</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>lat lng をまとめて location にする</p>
+</li>
+<li>
+<p>/src/components/App.jsx のややこしいトコを外だしして、シンプルに保つ</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>↓/src/domain/Geocoder.js</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import axios from 'axios';
+
+const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
+const GOOGLE_MAP_APIKEY = 'AIzaSyCINYzcjOFN4ChmBlhWaWOsKwkA4UQeHn4';
+
+export const geocode = place =&gt;
+  axios
+    .get(GEOCODE_ENDPOINT, {
+      params: {
+        key: GOOGLE_MAP_APIKEY,
+        address: place,
+      },
+    })
+    .then((results) =&gt; {
+      const data = results.data;
+      const status = data.status;
+      const result = data.results[0];
+      if (typeof result === 'undefined') {
+        return { status };
+      }
+
+      const address = result.formatted_address;
+      const location = result.geometry.location;
+      return { status, address, location };
+    });
+
+export const staticMap = (location, width, height, zoom) =&gt; `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&amp;size=${width}x${height}&amp;zoom=${zoom}&amp;key=${GOOGLE_MAP_APIKEY}`;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-22 22:36:30 +0900
+Last updated 2018-12-22 23:52:47 +0900
 </div>
 </div>
 </body>
