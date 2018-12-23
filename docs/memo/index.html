@@ -2005,6 +2005,66 @@ state を直接更新してはいけない（純粋関数ではなくなる）
 </tr>
 </table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_それぞれのコンポーネントでstoreを共有する">6.4.2. それぞれのコンポーネントでStoreを共有する</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>トップレベルでStoreを作り、dispatch、subscribe している</p>
+</li>
+<li>
+<p>このままでは <strong>Props地獄</strong> が発生する</p>
+</li>
+<li>
+<p>Store をすべてのComponentで共有するようにする</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>↓/src/index.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import React from 'react';
+import ReactDom from 'react-dom';
+import { createStore } from 'redux';
+
+import SearchPage from './containers/SearchPage';
+import reducer from './reducers/';
+
+ReactDom.render(
+  &lt;SearchPage
+    history={history}
+    location={location}
+    store={createStore(reducer)}
+  /&gt;,
+  document.querySelector('.container'),
+);</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_presentational_container_component_の分離">6.4.3. Presentational / Container component の分離</h4>
+<div class="paragraph">
+<p>Presentational component と Container component でディレクトリを分けることが多い</p>
+</div>
+<div class="paragraph">
+<p>表示のみに専念するPresentational componentとロジックのみに専念するContainer componentを分離することで，コンポーネントの再利用性を高めることができる</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Presentational component</dt>
+<dd>
+<p>純粋にPropsをもらって、Domを返すだけの純粋関数（に近い）。<br>
+Plesentation(表示)に関することだけをする</p>
+</dd>
+<dt class="hdlist1">Container component</dt>
+<dd>
+<p>StoreをSubscribeしてActionを発行したりする処理を行う。</p>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>==
 <a href="https://ics.media/entry/16028" class="bare">https://ics.media/entry/16028</a></p>
@@ -2017,7 +2077,7 @@ state を直接更新してはいけない（純粋関数ではなくなる）
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-23 14:00:21 +0900
+Last updated 2018-12-23 15:23:24 +0900
 </div>
 </div>
 </body>

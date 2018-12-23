@@ -996,5 +996,40 @@ export default (state = {
 ----
 WARNING: state を直接更新してはいけない（純粋関数ではなくなる）
 
+==== それぞれのコンポーネントでStoreを共有する
+* トップレベルでStoreを作り、dispatch、subscribe している
+* このままでは *Props地獄* が発生する
+* Store をすべてのComponentで共有するようにする
+
+↓/src/index.jsx
+----
+import React from 'react';
+import ReactDom from 'react-dom';
+import { createStore } from 'redux';
+
+import SearchPage from './containers/SearchPage';
+import reducer from './reducers/';
+
+ReactDom.render(
+  <SearchPage
+    history={history}
+    location={location}
+    store={createStore(reducer)}
+  />,
+  document.querySelector('.container'),
+);
+----
+
+==== Presentational / Container component の分離
+Presentational component と Container component でディレクトリを分けることが多い
+
+表示のみに専念するPresentational componentとロジックのみに専念するContainer componentを分離することで，コンポーネントの再利用性を高めることができる
+
+Presentational component::
+純粋にPropsをもらって、Domを返すだけの純粋関数（に近い）。 +
+Plesentation(表示)に関することだけをする
+Container component::
+StoreをSubscribeしてActionを発行したりする処理を行う。
+
 ==
 https://ics.media/entry/16028
