@@ -6,6 +6,7 @@ import { setPlace, startSearch } from '../actions/';
 const SearchForm = props => (
   <form onSubmit={(e) => {
     e.preventDefault();
+    props.history.push(`/?place=${props.place}`);
     props.startSearch(props.place);
   }}
   >
@@ -19,6 +20,7 @@ const SearchForm = props => (
 );
 
 SearchForm.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   place: PropTypes.string.isRequired,
   startSearch: PropTypes.func.isRequired,
   setPlace: PropTypes.func.isRequired,

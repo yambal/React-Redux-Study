@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { connect } from 'react-redux';
 
 import SearchForm from '../containers/SearchForm';
 import GeocodeResult from '../components/GeocodeResult';
 import Map from '../components/Map';
 
+import { startSearch } from '../actions/';
+
 class SearchPage extends Component {
-  getPlaceParam() {
-    const params = queryString.parse(this.props.location.search);
-    const place = params.place;
-    if (place && place.length > 0) {
-      return place;
-    }
-    return null;
+  componentDidMount() {
+    this.props.dispatch(startSearch());
   }
 
   render() {
     return (
       <div>
         <h1>緯度経度検索</h1>
-        <SearchForm />
+        <SearchForm history={this.props.history} />
         <GeocodeResult
           address={this.props.address}
           location={this.props.location}
@@ -37,6 +33,8 @@ class SearchPage extends Component {
 SearchPage.propTypes = {
   address: PropTypes.string.isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -47,5 +45,3 @@ const mapStateToProps = state => ({
 const ConnectedSearchPage = connect(mapStateToProps)(SearchPage);
 
 export default ConnectedSearchPage;
-
-// props.history.push(`/?place=${this.state.place}`);
