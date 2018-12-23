@@ -25,6 +25,14 @@ const geocodeResult = (
         address: action.address,
         location: action.location,
       };
+    case 'CHANGE_ERROR_MESSAGE':
+      return {
+        address: action.message,
+        location: {
+          lat: 0,
+          lng: 0,
+        },
+      };
     default:
       return state;
   }
