@@ -2,14 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const mapStateToProps = state => ({
-  place: state.place,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onPlaceChange: place => dispatch({ type: 'CHANGE_PLACE', place }),
-});
-
 const SearchForm = props => (
   <form onSubmit={e => props.onSubmit(e)}>
     <input
@@ -27,6 +19,12 @@ SearchForm.propTypes = {
   onPlaceChange: PropTypes.func.isRequired,
 };
 
-const ConnectedSearchForm = connect(mapStateToProps, mapDispatchToProps)(SearchForm);
+const mapStateToProps = state => ({
+  place: state.place,
+});
 
-export default ConnectedSearchForm;
+const mapDispatchToProps = dispatch => ({
+  onPlaceChange: place => dispatch({ type: 'CHANGE_PLACE', place }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);
