@@ -64,7 +64,7 @@ class SearchPage extends Component {
         this.setErrorMessage(`通信に失敗しました：${JSON.stringify(error)}`);
       });
   }
-  
+
   render() {
     return (
       <div>
