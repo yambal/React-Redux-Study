@@ -14,7 +14,7 @@ const Map = ({ location, width, height, zoom }) => (
 Map.propTypes = {
   location: PropTypes.shape({
     lat: PropTypes.number,
-    lng: PropTypes.number
+    lng: PropTypes.number,
   }).isRequired,
   width: PropTypes.number,
   height: PropTypes.number,

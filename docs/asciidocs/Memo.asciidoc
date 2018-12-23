@@ -1198,8 +1198,73 @@ const mapStateToProps = state => ({
 });
 ----
 
-=== ビューとビジネスロジックを分割する
+=== ビューとアクションを分割する
+Component (View) に Action（ビジネスロジック）が含まれていたりすると、メンテナンス性が低下する。 +
 
+image::../images/fig07.PNG[Redux]
+
+役割の切り分け
+
+==== Action Creater
+* dispatch に渡している Key-Value が Action
+* 別の関数に切り出すと *Action Creater* となる
+
+↓place を受け取ってアクションを返す Action Creator
+----
+export const setPlace = place => ({ type: 'CHANGE_PLACE', place });
+----
+↓こういう書き方もできる
+----
+export const setPlace = place => dispatch => dispatch({ type: 'CHANGE_PLACE', place });
+----
+==== Middleware を使う
+===== 非同期処理をどこに書くかという問題
+Reducer は 新旧の状態から State を返却する同期処理の関数群である。だから、Reducerが実行される前の段階となる。
+===== Middleware とは
+Action と Reducer の間に割って入って処理を差し込む。
+
+1. Store の dispatch が呼ばれ Action が発行される
+2. それを検知して、Middleware が処理をする
+3. 結果を Reducer に渡す
+
+image::../images/fig08.PNG[Middleware とは]
+
+チェーンも可能
+----
+applyMiddleware([thunk, hoge]);
+----
+
+==== thunk
+ここでは *thunk* を使ってみる
+----
+redux-thunk@2.2.0
+----
+===== applyMiddleware で thunk を指定し、Store を作る
+↓/sec/index.jsx : Redux DevTools を使わない場合
+----
+....
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+....
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk),
+);
+----
+↓/sec/index.jsx : Redux DevTools を使う場合 +
+http://extension.remotedev.io/#13-use-redux-devtools-extension-package-from-npm[Redux DevTools Extension]
+----
+redux-devtools-extension@2.13.2
+----
+----
+....
+import { composeWithDevTools } from 'redux-devtools-extension';
+....
+const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);
+----
 
 ==
 https://ics.media/entry/16028
