@@ -1,16 +1,14 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const publidDir = path.join(__dirname, '/docs');
-const gitPageDocDir = path.join(__dirname, '/docs');
-
+const publidDir = path.join(__dirname, '/public');
 module.exports = [
   {
     entry: [
       './src/index.jsx',
     ],
     output: {
-      path: gitPageDocDir,
+      path: publidDir,
       publicPath: '/',
       filename: 'bundle.js',
     },
@@ -36,13 +34,9 @@ module.exports = [
       style: './stylesheets/index.scss',
     },
     output: {
-      path: gitPageDocDir,
+      path: publidDir,
       publicPath: '/',
       filename: 'bundle.css',
-    },
-    devServer: {
-      historyApiFallback: true,
-      contentBase: publidDir,
     },
     module: {
       loaders: [

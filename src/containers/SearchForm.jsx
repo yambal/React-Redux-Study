@@ -6,7 +6,7 @@ import { setPlace, startSearch } from '../actions/';
 const SearchForm = props => (
   <form onSubmit={(e) => {
     e.preventDefault();
-    props.history.push(`/React-Redux-Study/?place=${props.place}`);
+    props.history.push(`/?place=${props.place}`);
     props.startSearch(props.place);
   }}
   >

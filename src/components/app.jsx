@@ -12,13 +12,15 @@ import AboutPage from './AboutPage';
 const App = () => (
   <Router>
     <div className="app">
-      <ul className="left-nav">
-        <li><Link to="/React-Redux-Study/">緯度経度検索</Link></li>
-        <li><Link to="/React-Redux-Study/about">About</Link></li>
-      </ul>
+      <div className="side">
+        <ul className="nav">
+          <li><Link to="/">緯度経度検索</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
+      </div>
       <Switch>
-        <Route exact path="/React-Redux-Study/" component={SearchPage} />
-        <Route exact path="/React-Redux-Study/about" component={AboutPage} />
+        <Route exact path="/" component={SearchPage} />
+        <Route exact path="/about" component={AboutPage} />
       </Switch>
     </div>
   </Router>
