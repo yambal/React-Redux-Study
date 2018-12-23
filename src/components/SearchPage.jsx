@@ -1,31 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-
-import SearchForm from '../components/SearchForm';
-
+import SearchForm from '../containers/SearchForm';
 import { geocode } from '../domain/Geocoder';
 
 class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      place: this.getPlaceParam(),
       location: {
         lat: 35,
         lng: 135,
       },
     };
-  }
-
-  componentDidMount() {
-    this.unsubscribe = this.props.store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   getPlaceParam() {
@@ -80,39 +67,27 @@ class SearchPage extends Component {
 
   handlePlaceChange(e) {
     e.preventDefault();
-    this.props.store.dispatch({ type: 'CHANGE_PLACE', place: e.target.value });
+    this.props.onPlaceChange(e.target.value);
   }
 
   render() {
-    const state = this.props.store.getState();
     return (
       <div>
         <h1>緯度経度検索</h1>
         <SearchForm
-          place={state.place}
+          place={this.props.place}
           onSubmit={e => this.handlePlaceSubmit(e)}
-          onPlaceChange={e => this.handlePlaceChange(e)}
         />
-        {/*
-        <GeocodeResult
-          address={this.state.address}
-          location={this.state.location}
-        />
-        <Map location={this.state.location} />
-        */}
       </div>
     );
   }
 }
 
 SearchPage.propTypes = {
+  place: PropTypes.string.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
-  store: PropTypes.shape({
-    subscribe: PropTypes.func,
-    getState: PropTypes.func,
-    dispatch: PropTypes.func,
-  }).isRequired,
+  onPlaceChange: PropTypes.func.isRequired,
 };
 
 export default SearchPage;

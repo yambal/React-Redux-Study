@@ -1031,5 +1031,78 @@ Plesentation(表示)に関することだけをする
 Container component::
 StoreをSubscribeしてActionを発行したりする処理を行う。
 
+=== Context を利用（簡素化）
+* すべてのコンポーネントで StoreをSubscribe... はめんどくさい
+* Context（Reactの機能） を利用して Store を共有する
+** 子コンポーネントに変数を伝播する仕組み
+* ルートで Store を詰めるのを自動化する Provider (react-redux) を使う
+* Subscribe、Action が必要な子コンポーネントでの自動化に conponent (react-redux) を使う
+
+==== ProviderにStateを渡し、ルートをラップする
+↓/src/index.jsx
+----
+import React from 'react';
+import ReactDom from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import SearchPage from './containers/SearchPage';
+import reducer from './reducers/';
+
+ReactDom.render(
+  <Provider store={createStore(reducer)}>
+    <SearchPage
+      history={history}
+      location={location}
+    />
+  </Provider>,
+  document.querySelector('.container'),
+);
+----
+
+==== Subscribe、Action が必要なコンポーネントを conect でラップする
+connext でコンポーネントに渡すpropを指示し、ラップして export する
+
+mapStateToProps::
+props にマップするState値を割り当てる
+mapDispatchToProps::
+props にマップするAction (dispatch) を割り当てる
+
+↓/src/containers/SearchForm.jsx
+----
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  place: state.place,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onPlaceChange: place => dispatch({ type: 'CHANGE_PLACE', place }),
+});
+
+const SearchForm = props => (
+  <form onSubmit={e => props.onSubmit(e)}>
+    <input
+      type="text"
+      value={props.place}
+      onChange={e => props.onPlaceChange(e.target.value)}
+    />
+    <input type="submit" value="検索" />
+  </form>
+);
+
+SearchForm.propTypes = {
+  place: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onPlaceChange: PropTypes.func.isRequired,
+};
+
+const ConnectedSearchForm = connect(mapStateToProps, mapDispatchToProps)(SearchForm);
+
+export default ConnectedSearchForm;
+----
+
 ==
 https://ics.media/entry/16028
