@@ -10,8 +10,11 @@ const GeocodeResult = ({ address, location }) => (
 );
 
 GeocodeResult.propTypes = {
-  address: PropTypes.string,
-  location: PropTypes.objectOf(PropTypes.number).isRequired,
+  location: PropTypes.shape({
+    address: PropTypes.string,
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }).isRequired,
 };
 
 GeocodeResult.defaultProps = {

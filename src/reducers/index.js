@@ -1,10 +1,36 @@
-export default (state = {
-  place: 'Hoge',
-}, action) => {
+import { combineReducers } from 'redux';
+
+const place = (state = '京都タワー', action) => {
   switch (action.type) {
     case 'CHANGE_PLACE':
-      return Object.assign({}, state, { place: action.place });
+      return action.place;
     default:
       return state;
   }
 };
+
+const geocodeResult = (
+  state = {
+    address: '日本、〒600-8216 京都府京都市下京区東塩小路町７２１−１',
+    location: {
+      lat: 34.9875441,
+      lng: 135.7592164,
+    },
+  },
+  action,
+) => {
+  switch (action.type) {
+    case 'GEOCODE_FETCHE':
+      return {
+        address: action.address,
+        location: action.location,
+      };
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  place,
+  geocodeResult,
+});

@@ -576,6 +576,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_redux_2">6.3. Redux</a></li>
 <li><a href="#_redux_の導入">6.4. Redux の導入</a></li>
 <li><a href="#_context_を利用簡素化">6.5. Context を利用（簡素化）</a></li>
+<li><a href="#_ビューとビジネスロジックを分割する">6.6. ビューとビジネスロジックを分割する</a></li>
 </ul>
 </li>
 </ul>
@@ -2240,6 +2241,74 @@ ReactDom.render(
 ...</pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_reducerの分割">6.5.4. Reducerの分割</h4>
+<div class="paragraph">
+<p>combineReducers で 複数のReducer をまとめることができる</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import { combineReducers } from 'redux';
+
+const place = (state = '京都タワー', action) =&gt; {
+  switch (action.type) {
+    case 'CHANGE_PLACE':
+      return action.place;
+    default:
+      return state;
+  }
+};
+
+const geocodeResult = (
+  state = {
+    address: '日本、〒600-8216 京都府京都市下京区東塩小路町７２１−１',
+    location: {
+      lat: 34.9875441,
+      lng: 135.7592164,
+    },
+  },
+  action,
+) =&gt; {
+  switch (action.type) {
+    case 'GEOCODE_FETCHE':
+      return {
+        address: action.address,
+        location: action.location,
+      };
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  place,
+  geocodeResult,
+});</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓connectでの参照は、combineReducers でのKeyとなる</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>const mapStateToProps = state =&gt; ({
+  address: state.geocodeResult.address,
+  location: state.geocodeResult.location,
+});</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>const mapStateToProps = state =&gt; ({
+  place: state.place,
+});</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ビューとビジネスロジックを分割する">6.6. ビューとビジネスロジックを分割する</h3>
 <div class="paragraph">
 <p>==
 <a href="https://ics.media/entry/16028" class="bare">https://ics.media/entry/16028</a></p>
@@ -2248,11 +2317,10 @@ ReactDom.render(
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-23 17:25:52 +0900
+Last updated 2018-12-23 18:52:35 +0900
 </div>
 </div>
 </body>
