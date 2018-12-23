@@ -11,8 +11,21 @@
 :source-highlighter: coderay
 
 = 最短で学ぶReactとReduxの基礎から実践まで
+
 [.lead]
-https://www.udemy.com/react-redux-from-beginning/?start=0[最短で学ぶReactとReduxの基礎から実践まで @Udemy]の内容
+https://www.udemy.com/react-redux-from-beginning/?start=0[最短で学ぶReactとReduxの基礎から実践まで @Udemy]の学習メモです。
+
+* 環境の構築：yarn、ES2015(ES6)、ESLint、SCSS、Webpack、Atom
+* ピュアな React をスクラッチで描き起こし、学ぶ
+* React Router を使った SPA
+* Redux、Middleware、Redux DevTools
+
+WARNING: 現在配布されているパッケージ群では、うまくい行かないケースが多々ある +
+yarn 等を利用して、指示されている当時のバージョンを利用したい。 +
+最新コードではどうなるか、別途調べたい。
+
+* https://github.com/yambal/React-Redux-Study[学習コード]
+* http://react-redux.yambal.net/[成果SAP]
 
 == 環境構築とHello world
 === yarn のインストール

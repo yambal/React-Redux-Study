@@ -34812,6 +34812,37 @@ var AboutPage = function AboutPage() {
       "h1",
       null,
       "About"
+    ),
+    _react2.default.createElement(
+      "ul",
+      null,
+      _react2.default.createElement(
+        "li",
+        null,
+        _react2.default.createElement(
+          "a",
+          { href: "https://github.com/yambal/React-Redux-Study" },
+          "GitHub"
+        )
+      ),
+      _react2.default.createElement(
+        "li",
+        null,
+        _react2.default.createElement(
+          "a",
+          { href: "/memo/index.html" },
+          "Memo : \u6700\u77ED\u3067\u5B66\u3076React\u3068Redux\u306E\u57FA\u790E\u304B\u3089\u5B9F\u8DF5\u307E\u3067"
+        )
+      ),
+      _react2.default.createElement(
+        "li",
+        null,
+        _react2.default.createElement(
+          "a",
+          { href: "/pdf/UdemyReact.pdf" },
+          "PDF : \u6700\u77ED\u3067\u5B66\u3076React\u3068Redux\u306E\u57FA\u790E\u304B\u3089\u5B9F\u8DF5\u307E\u3067"
+        )
+      )
     )
   );
 };
