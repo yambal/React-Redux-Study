@@ -33766,7 +33766,7 @@ var SearchForm = function SearchForm(props) {
     'form',
     { onSubmit: function onSubmit(e) {
         e.preventDefault();
-        props.history.push('/?place=' + props.place);
+        props.history.push('/React-Redux-Study/?place=' + props.place);
         props.startSearch(props.place);
       }
     },
