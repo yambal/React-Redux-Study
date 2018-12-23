@@ -1923,8 +1923,7 @@ const place = params.place;</pre>
 <div class="listingblock">
 <div class="content">
 <pre>yarn add redux@3.7.2
-yarn add react-redux@5.0.6
-yarn add redux-devtools@3.4.0</pre>
+yarn add react-redux@5.0.6</pre>
 </div>
 </div>
 <div class="sect3">
@@ -2176,6 +2175,71 @@ const ConnectedSearchForm = connect(mapStateToProps, mapDispatchToProps)(SearchF
 export default ConnectedSearchForm;</pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_redux_devtools">6.5.3. Redux DevTools</h4>
+<div class="paragraph">
+<p>ブラウザの Extention と連動するデバッグツール</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>yarn add redux-devtools@3.4.0</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://extension.remotedev.io/">Redux DevTools</a></p>
+</li>
+<li>
+<p><a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Redux DevTools Extension</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>createStore の末尾におまじないを追加する</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>window.__REDUX_DEVTOOLS_EXTENSION__ &amp;&amp; window.__REDUX_DEVTOOLS_EXTENSION__()</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>↓/src/index.jsx</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>...
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ &amp;&amp; window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+
+ReactDom.render(
+  &lt;Provider store={store}&gt;
+...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ESLintエラーが出る（変数の前後にアンダーバーを付けるな）<br>
+例外として登録する<br>
+.exlintrc.js</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>...
+"env": {
+  "browser" : true
+},
+"rules": {
+  "no-underscore-dangle" : [
+    "error",
+    { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }
+  ]
+}
+...</pre>
+</div>
+</div>
 <div class="paragraph">
 <p>==
 <a href="https://ics.media/entry/16028" class="bare">https://ics.media/entry/16028</a></p>
@@ -2188,7 +2252,7 @@ export default ConnectedSearchForm;</pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2018-12-23 16:52:32 +0900
+Last updated 2018-12-23 17:25:52 +0900
 </div>
 </div>
 </body>
