@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import SearchForm from './SearchForm';
-import GeocodeResult from './GeocodeResult';
-import Map from './Map';
+// import GeocodeResult from './GeocodeResult';
+// import Map from './Map';
 
 import { geocode } from '../domain/Geocoder';
 
@@ -73,15 +73,13 @@ class SearchPage extends Component {
         }
       })
       .catch((error) => {
-        // console.log(error);
-        this.setErrorMessage('通信に失敗しました');
+        this.setErrorMessage(`通信に失敗しました：${JSON.stringify(error)}`);
       });
   }
 
-  handlePlaceChange(place) {
-    this.setState({
-      place,
-    });
+  handlePlaceChange(e) {
+    e.preventDefault();
+    this.props.onPlaceChange(e.target.value);
   }
 
   render() {
@@ -89,23 +87,27 @@ class SearchPage extends Component {
       <div>
         <h1>緯度経度検索</h1>
         <SearchForm
-          place={this.state.place}
+          place={this.props.place}
           onSubmit={e => this.handlePlaceSubmit(e)}
-          onPlaceChange={place => this.handlePlaceChange(place)}
+          onPlaceChange={e => this.handlePlaceChange(e)}
         />
+        {/*
         <GeocodeResult
           address={this.state.address}
           location={this.state.location}
         />
         <Map location={this.state.location} />
+        */}
       </div>
     );
   }
 }
 
 SearchPage.propTypes = {
+  place: PropTypes.string.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
+  onPlaceChange: PropTypes.func.isRequired,
 };
 
 export default SearchPage;

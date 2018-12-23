@@ -6,7 +6,7 @@ const SearchForm = props => (
     <input
       type="text"
       value={props.place}
-      onChange={e => props.onPlaceChange(e.target.value)}
+      onChange={e => props.onPlaceChange(e)}
     />
     <input type="submit" value="検索" />
   </form>

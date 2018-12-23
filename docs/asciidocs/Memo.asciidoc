@@ -8,6 +8,7 @@
 :author: やまもとじゅん
 :revnumber: 0.1
 :revdate: 2018/12/22
+:source-highlighter: coderay
 
 = 最短で学ぶReactとReduxの基礎から実践まで
 [.lead]
@@ -24,6 +25,7 @@ YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJ
 https://yarnpkg.com/lang/ja/docs/install/[yarmインストール @yarnpkg.com]
 
 ==== yarnでインストールするパッケージのバージョンについて
+Udemyレクチャーが製作されたタイミングでの構成。
 ----
 axios@0.16.2
 babel-core@6.25.0
@@ -898,6 +900,101 @@ yarn add query-string@5.0.0
 const params = queryString.parse(this.props.location.search);
 const place = params.place;
 ----
+
+== Redux
+
+=== ピュアな React の流れ
+
+image::../images/fig04.PNG[ピュアな React の流れ]
+
+==== ピュアな Reactの問題
+
+image::../images/fig05.PNG[ピュアな Reactの問題]
+
+1. *Z* が持つステートを *B* で必要になったとき
+2. *A* にステートを移動する
+3. *props* で深く持ち回る必要が発生
+4. メンテが大変になる
+
+=== Flux
+特定のライブラリではなく、*考え方*
+
+* Component
+* Store
+* Action
+
+を分離することで、必要な個所のみのメンテが可能となる
+
+image::../images/fig06.PNG[Flux]
+
+=== Redux
+Flux の考え方をライブラリとして実装したもの。
+
+==== 3原則
+Single source of truth::
+一つの Store に全てを管理させる
+State is read-only::
+Action を発行して State を更新する
+Changes are made with pure function::
+State の変更は、純粋関数 (pure function) を使う。この純粋関数の部分が *Reducer*。
+
+image::../images/fig07.PNG[Redux]
+NOTE: *純粋関数*：副作用を与えない、同じ引数を渡せば、同じ結果が得られる。
+
+=== Redux の導入
+----
+yarn add redux@3.7.2
+yarn add react-redux@5.0.6
+yarn add redux-devtools@3.4.0
+----
+
+==== index.jsx
+1. redux の createStore を読み込む
+2. Reducer を引数に Store を生成する
+3. Store.getState() で State が取得できる
+4. Store.subscribe(func) で State変更の購読ができる
+5. Store.dispatch({ type: ACTION-TYPE, ...}) で State変更を発火する
+----
+import React from 'react';
+import ReactDom from 'react-dom';
+import { createStore } from 'redux';
+
+// import App from './components/App';
+import SearchPage from './components/SearchPage';
+import reducer from './reducers/';
+
+const store = createStore(reducer);
+
+const render = () => {
+  const state = store.getState();
+  ReactDom.render(
+    <SearchPage
+      place={state.place}
+      history={history}
+      location={location}
+      onPlaceChange={place => store.dispatch({ type: 'CHANGE_PLACE', place })}
+    />,
+    document.querySelector('.container'),
+  );
+};
+
+render();
+store.subscribe(render);
+----
+↓/src/reducers/index.jsx Reducer 最小限の構成
+----
+export default (state = {
+  place: 'Hoge',
+}, action) => {
+  switch (action.type) {
+    case 'CHANGE_PLACE':
+      return Object.assign({}, state, { place: action.place });
+    default:
+      return state;
+  }
+};
+----
+WARNING: state を直接更新してはいけない（純粋関数ではなくなる）
 
 ==
 https://ics.media/entry/16028
