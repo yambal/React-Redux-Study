@@ -29139,8 +29139,8 @@ var App = function App() {
       _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _SearchPage2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/about', component: _AboutPage2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/React-Redux-Study/', component: _SearchPage2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/React-Redux-Study/about', component: _AboutPage2.default })
       )
     )
   );

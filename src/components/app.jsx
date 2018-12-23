@@ -17,8 +17,8 @@ const App = () => (
         <li><Link to="/about">About</Link></li>
       </ul>
       <Switch>
-        <Route exact path="/" component={SearchPage} />
-        <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/React-Redux-Study/" component={SearchPage} />
+        <Route exact path="/React-Redux-Study/about" component={AboutPage} />
       </Switch>
     </div>
   </Router>
