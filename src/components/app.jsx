@@ -13,8 +13,8 @@ const App = () => (
   <Router>
     <div className="app">
       <ul className="left-nav">
-        <li><Link to="/">緯度経度検索</Link></li>
-        <li><Link to="/about">About</Link></li>
+        <li><Link to="/React-Redux-Study/">緯度経度検索</Link></li>
+        <li><Link to="/React-Redux-Study/about">About</Link></li>
       </ul>
       <Switch>
         <Route exact path="/React-Redux-Study/" component={SearchPage} />

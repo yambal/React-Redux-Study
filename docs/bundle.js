@@ -29122,7 +29122,7 @@ var App = function App() {
           null,
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/' },
+            { to: '/React-Redux-Study/' },
             '\u7DEF\u5EA6\u7D4C\u5EA6\u691C\u7D22'
           )
         ),
@@ -29131,7 +29131,7 @@ var App = function App() {
           null,
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/about' },
+            { to: '/React-Redux-Study/about' },
             'About'
           )
         )
