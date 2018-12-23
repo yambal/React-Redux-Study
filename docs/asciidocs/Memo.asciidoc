@@ -1266,5 +1266,10 @@ const store = createStore(
 );
 ----
 
+===== You Might Not Need Redux
+Redux じゃなくていいんじゃない？ +
+オブジェクトを排除して、全部関数型でやろうぜ、というのが Redux の趣向 +
+めんどくさい面もあるので、必要がなければ使わない方がいい
+
 ==
 https://ics.media/entry/16028
