@@ -64,18 +64,12 @@ class SearchPage extends Component {
         this.setErrorMessage(`通信に失敗しました：${JSON.stringify(error)}`);
       });
   }
-
-  handlePlaceChange(e) {
-    e.preventDefault();
-    this.props.onPlaceChange(e.target.value);
-  }
-
+  
   render() {
     return (
       <div>
         <h1>緯度経度検索</h1>
         <SearchForm
-          place={this.props.place}
           onSubmit={e => this.handlePlaceSubmit(e)}
         />
       </div>
@@ -84,10 +78,8 @@ class SearchPage extends Component {
 }
 
 SearchPage.propTypes = {
-  place: PropTypes.string.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string }).isRequired,
-  onPlaceChange: PropTypes.func.isRequired,
 };
 
 export default SearchPage;
